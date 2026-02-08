@@ -1,62 +1,25 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const { login } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const success = login(email, password);
-    if (success) {
-      navigate("/dashboard");
-    } else {
-      setError("Invalid credentials");
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Admin Login
-        </h2>
-
-        {error && (
-          <p className="text-red-600 mb-3 text-center">
-            {error}
-          </p>
-        )}
+      <div className="bg-white p-8 rounded shadow w-96">
+        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
         <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 mb-3 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Username"
+          className="w-full border p-2 mb-3"
         />
 
         <input
           type="password"
           placeholder="Password"
-          className="w-full border p-2 mb-4 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-2 mb-4"
         />
 
-        <button className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+        <button className="w-full bg-[#0A1A2F] text-white py-2 rounded">
           Login
         </button>
-      </form>
+      </div>
     </div>
   );
 }

@@ -1,39 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
+import PublicLayout from "./layouts/PublicLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ProductDetails from "./pages/ProductDetails";
+import Login from "./pages/Login";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 
+import DashboardLayout from "./dashboard/DashboardLayout";
+import DashboardHome from "./dashboard/DashboardHome";
+import DashboardProducts from "./dashboard/DashboardProducts";
+import AddProduct from "./dashboard/AddProduct";
 
-export default function App() {
+function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-
-      <Routes>
+    <Routes>
+      {/* Public Site */}
+      <Route element={<PublicLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/login" element={<Login />} />
+      </Route>
 
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      {/* Dashboard */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DashboardHome />} />
+        <Route path="products" element={<DashboardProducts />} />
+        <Route path="add-product" element={<AddProduct />} />
+      </Route>
+    </Routes>
   );
 }
+
+export default App;
